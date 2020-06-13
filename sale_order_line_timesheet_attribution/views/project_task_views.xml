@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+# Copyright 2020 TechnoLibre <info@technolibre.ca>
+# License AGPLv3.0 or later (https://www.gnu.org/licenses/agpl-3.0.en.html).
+-->
+<odoo>
+    <!-- Show timesheet approve check box for Project Managers -->
+    <record model="ir.ui.view" id="view_task_so_line_timesheet_form2_inherited">
+        <field name="name">project.task.so.line.form.inherited</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
+        <field name="groups_id" eval="[(6,0, (ref('project.group_project_manager'),))]"/>
+        <field name="arch" type="xml">
+            <field name="so_line" position="replace"/>
+            <field name="unit_amount" position="after">
+                <field name="timesheet_invoice_type" attrs="{'column_invisible': [('parent.partner_id', '=', False)]}"/>
+                <field name="so_line" options="{'no_create': True}" domain="[('order_partner_id','=',parent.partner_id), ('is_service', '=', True), ('is_expense','=',False),('state','in',['sale','done'])]" attrs="{'column_invisible': [('parent.partner_id', '=', False)]}"/>
+            </field>
+        </field>
+    </record>
+</odoo>
