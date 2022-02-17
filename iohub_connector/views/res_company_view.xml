@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <!-- Company -->
+    <record id="iohub_box_view_company_form" model="ir.ui.view">
+        <field name="name">iohub.box.res.company.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[last()]" position="after">
+                <page string="IOhub boxes">
+                    <field name="iohub_box_ids">
+                        <tree editable="top">
+                            <field name="name"/>
+                            <field name="broker_url"/>
+                            <field name="description"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    
+</odoo>

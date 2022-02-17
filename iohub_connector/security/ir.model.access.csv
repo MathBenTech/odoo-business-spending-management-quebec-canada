@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_iohub_box_user,iohub.box,model_iohub_box,,1,0,0,0
+access_iohub_box_manager,iohub.box,model_iohub_box,,1,1,1,1
+access_iohub_message_queue_manager,iohub.message.queue.manager,model_iohub_message_queue,,1,1,1,1
+access_iohub_message_queue_user,iohub.message.queue.user,model_iohub_message_queue,,1,0,0,0
