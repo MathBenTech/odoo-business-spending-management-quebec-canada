@@ -1,6 +1,7 @@
 from odoo import models, fields, api
 from datetime import datetime
 from random import choice
+from urllib.parse import urlparse
 import pytz
 
 
@@ -72,6 +73,41 @@ class JistiMeet(models.Model):
             if r.hash and r.name:
                 r.url = config_url + r.hash
 
+    @api.model
+    def get_channel(self, jitsi_id):
+        if jitsi_id == 0:
+            meetings = (
+                self
+                .sudo()
+                .create(
+                    {"name": "new from website", "date": fields.Datetime.now()}
+                )
+            )
+        elif jitsi_id > 0:
+            meetings = (
+                self.sudo().browse(jitsi_id)
+            )
+        else:
+            meetings = (
+                self
+                .sudo()
+                .search([("name", "!=", None)], limit=1)
+            )
+
+        meetingsInfo = {}
+        for meeting in meetings:
+            meetingsInfo = {
+                "meetingName": meeting.name,
+                "roomName": urlparse(meeting.url).path.replace("/", ""),
+                "domaineName": "meet.jit.si",
+                "url": meeting.url,
+            }
+        # email = request.env.user.email
+        # username = request.env.user.name
+        return {
+            "userInfo": {"email": "email", "displayName": "username"},
+            "meetings": meetingsInfo,
+        }
 
 class JitsiMeetExternalParticipant(models.Model):
     _name = 'sinerkia_jitsi_meet.external_user'
